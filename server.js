@@ -1,15 +1,20 @@
 const express = require('express');
 const path = require('path');
 const app = express();
+const cors = require("cors");
+const routes = require("./routes/routes");
 
-app.use(express.static(path.join(__dirname, 'dist/angular-starter/browser')));
+app.use(cors());
+app.use("/api", routes);
 
-app.get('/*', function (req, res) {
-  res.sendFile(path.join(__dirname, 'dist/angular-starter/browser', 'index.html'));
-});
+// app.use(express.static(path.join(__dirname, 'dist/angular-starter/browser')));
 
-const port = 4000;
+// app.get('*', function (req, res) {
+//   res.sendFile(path.join(__dirname, 'dist/angular-starter/browser', 'index.html'));
+// });
+
+const port = 3000;
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
+  console.log(`Application listening on port ${port}`)
 })
 

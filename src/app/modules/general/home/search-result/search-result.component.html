@@ -1,0 +1,21 @@
+<div class="row mb-2" *ngIf="searchResult">
+    <div class="col-12" *ngFor="let result of searchResult">
+    <a class="news-url side-card-links" [href]="result.url" target="_new">
+        <mat-card class="side-card">
+        <mat-card-content>
+            <div class="row">
+            <div class="col-3">
+                <img class="searchImg" *ngIf="result.urlToImage" mat-card-sm-image [src]="result.urlToImage">
+            </div>
+            <div class="col-9">
+                <p class="title"><strong>{{result.title}}</strong></p>
+                {{result.description}}
+                <br><br>
+                <small class="float-end">Source: {{result.source.name}} | {{result.publishedAt | date: 'medium'}}</small>          
+            </div>
+            </div>
+        </mat-card-content>
+        </mat-card>
+    </a>
+    </div>
+</div>

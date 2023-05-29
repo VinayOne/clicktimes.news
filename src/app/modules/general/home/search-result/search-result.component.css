@@ -1,0 +1,26 @@
+.news-url {
+    text-decoration: none;
+  }
+  .side-card {
+    margin-bottom : 5px;
+  }
+  .side-card-links {
+    color:#1b1b1b;
+  }
+.mat-mdc-card {
+    background-color: #ffffff;
+}
+.searchImg {
+    width: 195px;
+    height: 120px;
+}
+.mdc-card__actions {
+    justify-content: flex-end;
+}
+
+@media screen and (max-width: 768px) {
+  .searchImg {
+    width: 65px;
+    height: auto;
+}
+}

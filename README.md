@@ -19,13 +19,13 @@
 ```bash
 # choose a repo
 # download the example or clone the repo from github
-git clone https://github.com/ganatan/angular-ssr.git
+git clone https://github.com/ganatan/news-network.git
 
 # download the example or clone the repo from gitlab
-git clone https://gitlab.com/ganatan/angular-ssr.git
+git clone https://gitlab.com/ganatan/news-network.git
 
 # change directory
-cd angular-ssr
+cd news-network
 
 # install the repo with npm
 npm install

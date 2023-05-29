@@ -1,53 +1,74 @@
-<div class="container py-5">
-  <div class="row">
-    <div class="col-12 col-sm-12 col-md-12 col-lg-3 col-xl-3 text-center mb-2">
-      <h1 class="h5">
-        <i class="fas fa-laptop fa-lg me-2 text-primary"></i>
-        {{ name }}
-        <i class="fas fa-mobile-alt fa-lg ms-2 text-primary"></i>
-      </h1>
-    </div>
-    <div class="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-3 text-center text-danger mb-2">
-      <h2 class="h5">
-        {{ version }}<i class="fab fa-angular fa-lg ms-2"></i>
-      </h2>
-    </div>
-    <div class="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-3 text-center text-primary mb-2">
-      <h2 class="h5">
-        {{ bootstrap }}<i class="fab fa-bootstrap fa-lg ms-2"></i>
-      </h2>
-    </div>
-    <div class="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-3 text-center text-success mb-2">
-      <h2 class="h5">
-        {{ fontawesome }}<i class="fab fa-font-awesome-flag fa-lg ms-2"></i>
-      </h2>
-    </div>
-  </div>
-  <hr>
+<div class="container py-3">
   <div class="row mb-2">
-    <div class="col-md-12 text-center mb-4">
-      <h3 class="h5">Features<i class="fas fa-list ms-2"></i></h3>
+    <div class="col-12">
+      <mat-card class="searchBox">
+        <mat-card-content>
+          <div class="input-group">
+            <input type="text" class="form-control" #searchTxt placeholder="Search" />
+            <button type="button" class="btn btn-outline-danger me-2" (click)="search(searchTxt.value)">Go</button>
+          </div>          
+        </mat-card-content>
+      </mat-card>
     </div>
   </div>
-  <div class="row pt-2">
-    <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-3 mb-2" *ngFor="let feature of features">
-      <div class="card nga-card bg-light mb-3">
-        <a routerLink="/{{ feature.link }}">
-          <div class="card-header">
-            <div class="row">
-              <div class="col-10 col-xl-10">
-                <h4 class="card-title h5">{{ feature.name }}</h4>
-              </div>
-              <div class="col-2 col-xl-2">
-                <i class="{{ feature.icon }} fa-lg text-primary"></i>
-              </div>
-            </div>
+  <div class="row mb-2">
+    <div class="col-8">
+      <p class="trending" *ngIf="!searched">
+        Top Headlines &nbsp;
+        <img [src]="locationData?.country_flag" class="countryFlag" />
+        <span class="timeDate">
+         {{locationData?.time_zone.current_time | date: 'medium' }}
+        </span>
+      </p>
+      <p class="trending" *ngIf="searched">
+        Results found : {{searchedData?.totalResults}}
+        <span class="timeDate">
+          {{locationData?.time_zone.current_time | date: 'medium' }}
+         </span>
+      </p>
+      <mat-progress-bar mode="indeterminate" *ngIf="!articles"></mat-progress-bar>
+      <app-search-result *ngIf="searched" [searchResult]="searchedData?.articles"></app-search-result>
+      <div class="row" *ngIf="!searched">
+          <div class="col-lg-6 col-md-6 col-sm-12" *ngFor="let news of articles?.articles">
+            <a class="news-url" [href]="news.url" target="_new">
+            <mat-card class="example-card">
+              <mat-card-header>
+                <mat-card-title>{{news.title | slice:0:100 }}..</mat-card-title>          
+              </mat-card-header>
+              <img mat-card-image [src]="news.urlToImage || newNetworkLogo" [alt]="news.title">
+              <mat-card-content>
+                <mat-card-subtitle>Source: {{news.source.name}} | {{news.publishedAt | date: 'medium'}}</mat-card-subtitle>
+                <p>
+                  {{news.description }}
+                </p>
+              </mat-card-content>
+            </mat-card>
+            </a>
           </div>
-          <div class="card-body">
-            <p class="card-text">{{ feature.description }}</p>
-          </div>
-        </a>
       </div>
     </div>
+    <div class="col-4">
+      <p class="trending">Trending</p>
+      <mat-progress-bar mode="indeterminate" *ngIf="!latestTrends"></mat-progress-bar>
+      <div class="row">
+        <div class="col-12 mb-2" *ngFor="let trend of latestTrends?.data.items">
+          <a class="news-url side-card-links" [href]="trend.ht_news_item.ht_news_item_url" target="_new">
+            <mat-card class="side-card">
+              <mat-card-content>
+                <div class="row">
+                  <div class="col-lg-3 col-md-4 col-sm-12">
+                    <img *ngIf="trend.ht_picture" mat-card-sm-image [src]="trend.ht_picture">
+                  </div>
+                  <div class="col-lg-9 col-md-8 col-sm-12">
+                    <p class="title"><strong>{{trend.title}}</strong></p>
+                    {{trend.ht_news_item.ht_news_item_snippet}}
+                  </div>
+                </div>
+              </mat-card-content>
+            </mat-card>
+          </a>          
+        </div>
+      </div>
+    </div>    
   </div>
 </div>
