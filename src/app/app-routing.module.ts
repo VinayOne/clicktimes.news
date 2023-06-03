@@ -48,6 +48,31 @@ const routes: Routes = [
     loadChildren: () => import('./modules/general/signup/signup.module')
       .then(mod => mod.SignupModule)
   },
+  {
+    path: 'entertainment',
+    loadChildren: () => import('./modules/general/entertainment/entertainment.module')
+      .then(mod => mod.EntertainmentModule)
+  },
+  {
+    path: 'technology',
+    loadChildren: () => import('./modules/general/technology/technology.module')
+      .then(mod => mod.TechnologyModule)
+  },
+  {
+    path: 'health',
+    loadChildren: () => import('./modules/general/health/health.module')
+      .then(mod => mod.HealthModule)
+  },
+  {
+    path: 'sports',
+    loadChildren: () => import('./modules/general/sports/sports.module')
+      .then(mod => mod.SportsModule)
+  },
+  {
+    path: 'business',
+    loadChildren: () => import('./modules/general/business/business.module')
+      .then(mod => mod.BusinessModule)
+  },
   { path: '**', component: NotFoundComponent }
 ];
 

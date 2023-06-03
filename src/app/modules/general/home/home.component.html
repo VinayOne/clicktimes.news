@@ -14,14 +14,14 @@
   <div class="row mb-2">
     <div class="col-8">
       <p class="trending" *ngIf="!searched">
-        Top Headlines &nbsp;
+        {{title}} &nbsp;
         <img [src]="locationData?.country_flag" class="countryFlag" />
         <span class="timeDate">
          {{locationData?.time_zone.current_time | date: 'medium' }}
         </span>
       </p>
       <p class="trending" *ngIf="searched">
-        Results found : {{searchedData?.totalResults}}
+        Results found : {{searchedData?.totalResults || 0}} &nbsp;&nbsp;<button type="button" class="btn btn-outline-light btn-sm" (click)="clearSearch(searchTxt)">Clear Search</button>
         <span class="timeDate">
           {{locationData?.time_zone.current_time | date: 'medium' }}
          </span>
@@ -49,26 +49,7 @@
     </div>
     <div class="col-4">
       <p class="trending">Trending</p>
-      <mat-progress-bar mode="indeterminate" *ngIf="!latestTrends"></mat-progress-bar>
-      <div class="row">
-        <div class="col-12 mb-2" *ngFor="let trend of latestTrends?.data.items">
-          <a class="news-url side-card-links" [href]="trend.ht_news_item.ht_news_item_url" target="_new">
-            <mat-card class="side-card">
-              <mat-card-content>
-                <div class="row">
-                  <div class="col-lg-3 col-md-4 col-sm-12">
-                    <img *ngIf="trend.ht_picture" mat-card-sm-image [src]="trend.ht_picture">
-                  </div>
-                  <div class="col-lg-9 col-md-8 col-sm-12">
-                    <p class="title"><strong>{{trend.title}}</strong></p>
-                    {{trend.ht_news_item.ht_news_item_snippet}}
-                  </div>
-                </div>
-              </mat-card-content>
-            </mat-card>
-          </a>          
-        </div>
-      </div>
+      <app-google-trends></app-google-trends>
     </div>    
   </div>
 </div>

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { environment } from '../../../../environments/environment';
-import { Feature } from './feature';
-import { HomeService } from './home.service';
+import { HomeService } from '../../shared/home.service';
 
 @Component({
   selector: 'app-home',
@@ -18,69 +17,43 @@ export class HomeComponent implements OnInit{
   newNetworkLogo = './assets/params/images/logo/news-network-logo.jpg';
   articles: any;
   locationData: any;
-  latestTrends: any;
   currencyData: any;
   searched = false;
   searchedData: any;
+  newsCategory = '';
+  title = 'Top Headlines';
 
   constructor(private homeService: HomeService) { }
 
   ngOnInit(): void {
-    this.fetchUserLocation();
-    setTimeout(() => {
-      this.getNewsArticles();
-      this.getGoogleLatestTrends();
-      //this.getCurrency();
-    }, 1000);
+    const cachedArticles = sessionStorage.getItem('savedArticles') || null;
+    if(cachedArticles) {
+      this.articles = JSON.parse(cachedArticles);
+    } else {
+      setTimeout(() => {
+        const localLocation = sessionStorage.getItem('localLocation') || null;
+        if(localLocation) {
+          this.locationData = JSON.parse(localLocation);
+          this.getNewsArticles();          
+        }        
+      },500);
+    }
   }
 
   getNewsArticles() {
     if(this.locationData) {
-    this.homeService.getNewsApiOrg(this.locationData.country_code2).subscribe({
+    this.homeService.getNewsApiOrg(this.newsCategory, this.locationData.country_code2).subscribe({
       next: response => {
-          if(response) this.articles = response;       
+          if(response) {
+            this.articles = response;
+            sessionStorage.setItem('savedArticles', JSON.stringify(this.articles));
+          }   
       },
       error: err => {
         console.log('Error: ', err);
       }
     })
     }    
-  }
-
-  fetchUserLocation() {
-    this.homeService.getGeoLocation().subscribe({
-      next: response => {
-        if(response) this.locationData = response;
-      }, 
-      error: err => {
-        console.log('Error: ', err);
-      }
-    })
-  }
-
-  getGoogleLatestTrends() {
-    let result: any;
-    this.homeService.getGoogleTrends(this.locationData.country_code2).subscribe({
-      next: response => {
-        if(response) {
-          result = response;
-          result.data.items.forEach( (obj: any) => this.renameKey( obj, 'ht:picture', 'ht_picture' ) );
-          result.data.items.forEach( (obj: any) => this.renameKey( obj, 'ht:news_item', 'ht_news_item' ) );
-          result.data.items.forEach( (obj: any) => this.renameKey( obj.ht_news_item, 'ht:news_item_snippet', 'ht_news_item_snippet' ) );
-          result.data.items.forEach( (obj: any) => this.renameKey( obj.ht_news_item, 'ht:news_item_url', 'ht_news_item_url' ) );
-          let updatedJson =  result;
-          this.latestTrends = updatedJson;
-        }
-      },
-      error: err => {
-        console.log('Error: ', err);
-      }
-    })
-  }
-
-  renameKey ( obj:any, oldKey:string, newKey:string ) {
-    obj[newKey] = obj[oldKey];
-    delete obj[oldKey];
   }
 
   getCurrency() {
@@ -115,6 +88,11 @@ export class HomeComponent implements OnInit{
         console.log('Error: ', err);
       }
     })
+  }
+
+  clearSearch(searchTxt: any) {
+    searchTxt.value = '';
+    this.searched = false;
   }
 
 }

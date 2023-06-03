@@ -17,8 +17,8 @@ export class HomeService {
     return this.http.get(`https://newsdata.io/api/1/news?apikey=pub_22872da7e3e122d7aa03c0f0aaae2a8e808b9&country=${country_code}`);
   }
 
-  getNewsApiOrg(country_code: string) {
-    return this.http.get(`https://newsapi.org/v2/top-headlines?country=${country_code}&apiKey=c4690557cb694d7190d307c5cabf36e0`);
+  getNewsApiOrg(category: string, country_code: string) {
+    return this.http.get(`https://newsapi.org/v2/top-headlines?country=${country_code}&category=${category}&apiKey=c4690557cb694d7190d307c5cabf36e0`);
   }
 
   getGoogleTrends(country_code: string) {

@@ -4,6 +4,8 @@ import { RouterModule } from '@angular/router';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { MaterialModule } from './material.module';
+import { GoogleTrendsComponent } from '../general/google-trends/google-trends.component';
+import { SearchResultComponent } from '../general/search-result/search-result.component';
 
 
 
@@ -11,13 +13,20 @@ import { MaterialModule } from './material.module';
 @NgModule({
   declarations: [
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    GoogleTrendsComponent,
+    SearchResultComponent
   ],
   imports: [
     CommonModule,
     RouterModule,
     MaterialModule
   ],
-  exports: [HeaderComponent,FooterComponent]
+  exports: [
+    HeaderComponent,
+    FooterComponent, 
+    GoogleTrendsComponent,
+    SearchResultComponent
+  ]
 })
 export class SharedModule { }

@@ -9,14 +9,12 @@ import { SharedModule } from './modules/shared/shared.module';
 import { MaterialModule } from './modules/shared/material.module';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { SearchResultComponent } from './modules/general/home/search-result/search-result.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    NotFoundComponent,
-    SearchResultComponent
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,

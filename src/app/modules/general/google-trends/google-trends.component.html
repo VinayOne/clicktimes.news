@@ -1,0 +1,20 @@
+<mat-progress-bar mode="indeterminate" *ngIf="!latestTrends"></mat-progress-bar>
+<div class="row">
+    <div class="col-12 mb-2" *ngFor="let trend of latestTrends?.data.items">
+      <a class="news-url side-card-links" [href]="trend.ht_news_item.ht_news_item_url" target="_new">
+        <mat-card class="side-card">
+          <mat-card-content>
+            <div class="row">
+              <div class="col-lg-3 col-md-4 col-sm-12">
+                <img *ngIf="trend.ht_picture" mat-card-sm-image [src]="trend.ht_picture">
+              </div>
+              <div class="col-lg-9 col-md-8 col-sm-12">
+                <p class="title"><strong>{{trend.title}}</strong></p>
+                {{trend.ht_news_item.ht_news_item_snippet}}
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </a>          
+    </div>
+  </div>
