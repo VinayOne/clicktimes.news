@@ -16,6 +16,7 @@ export class HealthComponent {
   searchedData: any;
   newsCategory = 'health';
   title = 'Health';
+  searchBusy = false;
 
   constructor(private homeService: HomeService) { }
 
@@ -30,7 +31,7 @@ export class HealthComponent {
       this.locationData = JSON.parse(localLocation);
       this.getNewsArticles();
     }
-      },500)
+      },700)
       
     }
   }
@@ -53,11 +54,14 @@ export class HealthComponent {
 
   search(queryTxt: string) {
     this.searched = true;
-    const querytxt = queryTxt.split(' ').join('+')
-    console.log(querytxt);
+    this.searchBusy = true;
+    const querytxt = queryTxt.split(' ').join('+');
     this.homeService.serachNewsArticles(querytxt).subscribe({
       next: response => {
-        if(response) this.searchedData = response;
+        if(response) {
+          this.searchedData = response;
+          this.searchBusy = false;
+        }
       },
       error: err => {
         console.log('Error: ', err);

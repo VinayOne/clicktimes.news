@@ -22,6 +22,7 @@ export class HomeComponent implements OnInit{
   searchedData: any;
   newsCategory = '';
   title = 'Top Headlines';
+  searchBusy = false;
 
   constructor(private homeService: HomeService) { }
 
@@ -36,7 +37,7 @@ export class HomeComponent implements OnInit{
           this.locationData = JSON.parse(localLocation);
           this.getNewsArticles();          
         }        
-      },500);
+      },700);
     }
   }
 
@@ -78,11 +79,16 @@ export class HomeComponent implements OnInit{
 
   search(queryTxt: string) {
     this.searched = true;
-    const querytxt = queryTxt.split(' ').join('+')
-    console.log(querytxt);
+    this.searchBusy = true;
+    const querytxt = queryTxt.split(' ').join('+');
     this.homeService.serachNewsArticles(querytxt).subscribe({
       next: response => {
-        if(response) this.searchedData = response;
+        console.log('respnse: ', response);
+        if(response) {
+          this.searchedData = response;
+          this.searchBusy = false;
+        }
+
       },
       error: err => {
         console.log('Error: ', err);

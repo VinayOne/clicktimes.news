@@ -1,4 +1,4 @@
-<div class="container py-5">
+<!-- <div class="container py-3">
   <p>contact works!</p>
   <ul>
     <li><a routerLink="/contact/mailing">Mailing</a></li>
@@ -7,4 +7,38 @@
   </ul>
   <h4>Child Routes Result</h4>
   <router-outlet></router-outlet>
+</div> -->
+<div class="container py-5">
+  <div class="row mb-2">
+    <div class="col-12">
+      <form [formGroup]="contactForm" (ngSubmit)="sendContactData()">
+      <mat-card class="searchBox">
+        <mat-card-content>
+          <div class="row">
+            <div class="col-4">
+              <img class="contact-img" src="../../../../assets/params/images/contact-us.jpeg" />
+            </div>
+            <div class="col-8">
+              <div class="form-group">
+                <label>Name</label>
+                <input type="text" formControlName="name" class="form-control" />
+              </div>
+              <div class="form-group">
+                <label>Email</label>
+                <input type="email" formControlName="email" class="form-control" />
+              </div>
+              <div class="form-group">
+                <label>Message</label>
+                <textarea class="form-control" formControlName="message" rows="5"></textarea>
+              </div>
+              <br><br>
+              <p *ngIf="sentMsg">{{sentMsg}}</p>
+              <button type="submit" class="btn btn-danger float-end" [disabled]="!contactForm.valid">Send</button>
+            </div>
+          </div>          
+        </mat-card-content>
+      </mat-card>
+    </form>
+    </div>        
+  </div>
 </div>

@@ -1,6 +1,14 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
+
+const headers = new HttpHeaders({
+  'Content-Type': 'application/json',
+  'X-BingApis-SDK': 'true',
+  'X-RapidAPI-Key': '2d0898d518msh4264d2009a2b14fp16d7cdjsndbc63b10fa43',
+  'X-RapidAPI-Host': 'bing-news-search1.p.rapidapi.com' 
+});
+const headerOptions = { headers: headers };
 
 @Injectable({
   providedIn: 'root'
@@ -29,8 +37,16 @@ export class HomeService {
     return this.http.get(`https://api.freecurrencyapi.com/v1/latest?apikey=uWl7dMvWDIehJcVy6MIpO9dW5XAlhLP3lDeMyUnz`);
   }
 
-  serachNewsArticles(querytext: string) {
-    return this.http.get(`https://newsapi.org/v2/everything?q=${querytext}&apiKey=c4690557cb694d7190d307c5cabf36e0`);
+  // serachNewsArticles(querytext: string) {
+  //   return this.http.get(`https://newsapi.org/v2/everything?q=${querytext}&apiKey=c4690557cb694d7190d307c5cabf36e0`);
+  // }
+
+  serachNewsArticles(queryText: string) {
+    return this.http.get(`https://bing-news-search1.p.rapidapi.com/news/search?q=${queryText}&freshness=DAY&textFormat=RAW&safeSearch=Off&offset=0&count=30`, headerOptions);
+  }
+
+  sendMail(data: any) {
+    return this.http.post(`${environment.application.apiUrl}/sendmail`, data);
   }
 
 }

@@ -6,6 +6,7 @@ import { FooterComponent } from './footer/footer.component';
 import { MaterialModule } from './material.module';
 import { GoogleTrendsComponent } from '../general/google-trends/google-trends.component';
 import { SearchResultComponent } from '../general/search-result/search-result.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -20,13 +21,17 @@ import { SearchResultComponent } from '../general/search-result/search-result.co
   imports: [
     CommonModule,
     RouterModule,
-    MaterialModule
+    MaterialModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   exports: [
     HeaderComponent,
     FooterComponent, 
     GoogleTrendsComponent,
-    SearchResultComponent
+    SearchResultComponent,
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class SharedModule { }

@@ -1,55 +1,55 @@
 <div class="container py-3">
-    <div class="row mb-2">
-      <div class="col-12">
-        <mat-card class="searchBox">
-          <mat-card-content>
-            <div class="input-group">
-              <input type="text" class="form-control" #searchTxt placeholder="Search" />
-              <button type="button" class="btn btn-outline-danger me-2" (click)="search(searchTxt.value)">Go</button>
-            </div>          
-          </mat-card-content>
-        </mat-card>
-      </div>
-    </div>
-    <div class="row mb-2">
-      <div class="col-8">
-        <p class="trending" *ngIf="!searched">
-          {{title}} &nbsp;
-          <img [src]="locationData?.country_flag" class="countryFlag" />
-          <span class="timeDate">
-           {{locationData?.time_zone.current_time | date: 'medium' }}
-          </span>
-        </p>
-        <p class="trending" *ngIf="searched">
-          Results found : {{searchedData?.totalResults || 0}} &nbsp;&nbsp;<button type="button" class="btn btn-outline-light btn-sm" (click)="clearSearch(searchTxt)">Clear Search</button>
-          <span class="timeDate">
-            {{locationData?.time_zone.current_time | date: 'medium' }}
-           </span>
-        </p>
-        <mat-progress-bar mode="indeterminate" *ngIf="!articles"></mat-progress-bar>
-        <app-search-result *ngIf="searched" [searchResult]="searchedData?.articles"></app-search-result>
-        <div class="row" *ngIf="!searched">
-            <div class="col-lg-6 col-md-6 col-sm-12" *ngFor="let news of articles?.articles">
-              <a class="news-url" [href]="news.url" target="_new">
-              <mat-card class="example-card">
-                <mat-card-header>
-                  <mat-card-title>{{news.title | slice:0:100 }}..</mat-card-title>          
-                </mat-card-header>
-                <img mat-card-image [src]="news.urlToImage || newNetworkLogo" [alt]="news.title">
-                <mat-card-content>
-                  <mat-card-subtitle>Source: {{news.source.name}} | {{news.publishedAt | date: 'medium'}}</mat-card-subtitle>
-                  <p>
-                    {{news.description }}
-                  </p>
-                </mat-card-content>
-              </mat-card>
-              </a>
-            </div>
-        </div>
-      </div>
-      <div class="col-4">
-        <p class="trending">Trending</p>
-        <app-google-trends></app-google-trends>
-      </div>    
+  <div class="row mb-2">
+    <div class="col-12">
+      <mat-card class="searchBox">
+        <mat-card-content>
+          <div class="input-group">
+            <input type="text" class="form-control" #searchTxt placeholder="Search" />
+            <button type="button" class="btn btn-outline-danger me-2" (click)="search(searchTxt.value)">Go</button>
+          </div>          
+        </mat-card-content>
+      </mat-card>
     </div>
   </div>
+  <div class="row mb-2">
+    <div class="col-8">
+      <p class="trending" *ngIf="!searched">
+        {{title}} &nbsp;
+        <img [src]="locationData?.country_flag" class="countryFlag" />
+        <span class="timeDate">
+         {{locationData?.time_zone.current_time | date: 'medium' }}
+        </span>
+      </p>
+      <p class="trending" *ngIf="searched">
+        Results found : {{searchedData?.totalEstimatedMatches || 0}} &nbsp;&nbsp;<button type="button" class="btn btn-outline-light btn-sm" (click)="clearSearch(searchTxt)">Clear Search</button>
+        <span class="timeDate">
+          {{locationData?.time_zone.current_time | date: 'medium' }}
+         </span>
+      </p>
+      <mat-progress-bar mode="indeterminate" *ngIf="!articles || searchBusy"></mat-progress-bar>
+      <app-search-result *ngIf="searched" [searchResult]="searchedData?.value"></app-search-result>
+      <div class="row" *ngIf="!searched">
+          <div class="col-lg-6 col-md-6 col-sm-12" *ngFor="let news of articles?.articles">
+            <a class="news-url" [href]="news.url" target="_new">
+            <mat-card class="example-card">
+              <mat-card-header>
+                <mat-card-title>{{news.title | slice:0:100 }}..</mat-card-title>          
+              </mat-card-header>
+              <img mat-card-image [src]="news.urlToImage || newNetworkLogo" [alt]="news.title">
+              <mat-card-content>
+                <mat-card-subtitle>Source: {{news.source.name}} | {{news.publishedAt | date: 'medium'}}</mat-card-subtitle>
+                <p>
+                  {{news.description }}
+                </p>
+              </mat-card-content>
+            </mat-card>
+            </a>
+          </div>
+      </div>
+    </div>
+    <div class="col-4">
+      <p class="trending">Trending</p>
+      <app-google-trends></app-google-trends>
+    </div>    
+  </div>
+</div>

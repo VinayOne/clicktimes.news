@@ -24,7 +24,7 @@ export class GoogleTrendsComponent implements OnInit {
           this.locationData = JSON.parse(localLocation);
           this.getGoogleLatestTrends();
         }
-      }, 500);
+      }, 700);
     }
   }
 
