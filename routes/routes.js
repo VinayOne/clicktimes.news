@@ -8,7 +8,7 @@ let parser = new Parser({
     item: ['description','ht:picture', 'ht:picture_source', 'ht:news_item'],
   }
 });
-const request = require('request');
+const axios = require("axios");
 
 const Mailjet = require('node-mailjet');
 const mailjet = Mailjet.apiConnect(
@@ -65,17 +65,11 @@ request.then((result) => {
 
 });
 
-router.route('/newsapi/:countrycode/:category').get((req, res) => {
-  request(
-    { url: `https://newsapi.org/v2/top-headlines?country=${req.params.country_code}&category=${req.params.category}&apiKey=c4690557cb694d7190d307c5cabf36e0` },
-    (error, response, body) => {
-      if (error || response.statusCode !== 200) {
-        return res.status(500).json({ type: 'error', message: error });
-      }
+// https://newsapi.org/v2/top-headlines?country=us&category=sports&apiKey=c4690557cb694d7190d307c5cabf36e0
 
-      res.json(JSON.parse(body));
-    }
-  )
+router.route('/newsapi/:country_code/:category').get((req, res) => {
+  const backendUrl = `https://newsapi.org/v2/top-headlines?country=${req.params.country_code}&category=${req.params.category}&apiKey=c4690557cb694d7190d307c5cabf36e0`;
+  axios.get(backendUrl).then(response => res.send(response?.data));
 });
 
 module.exports = router;

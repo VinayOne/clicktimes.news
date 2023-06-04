@@ -20,7 +20,7 @@ export class HomeComponent implements OnInit{
   currencyData: any;
   searched = false;
   searchedData: any;
-  newsCategory = 'headlines';
+  newsCategory = 'everything';
   title = 'Top Headlines';
   searchBusy = false;
 
