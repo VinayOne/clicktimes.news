@@ -8,12 +8,18 @@ let parser = new Parser({
     item: ['description','ht:picture', 'ht:picture_source', 'ht:news_item'],
   }
 });
+const request = require('request');
 
 const Mailjet = require('node-mailjet');
 const mailjet = Mailjet.apiConnect(
   '77e6a56444b50c0566f3553ad62e1c32',
   '92149bc982866de5f94075411b29024c',
 );
+
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  next();
+});
 
 // const requestTime = (async (req, res, next) => {
 //   req.requestTime = await Date.now();
@@ -57,6 +63,19 @@ request.then((result) => {
     console.log(err.statusCode);
   })
 
-  });
+});
+
+router.route('/newsapi/:countrycode/:category').get((req, res) => {
+  request(
+    { url: `https://newsapi.org/v2/top-headlines?country=${req.params.country_code}&category=${req.params.category}&apiKey=c4690557cb694d7190d307c5cabf36e0` },
+    (error, response, body) => {
+      if (error || response.statusCode !== 200) {
+        return res.status(500).json({ type: 'error', message: error });
+      }
+
+      res.json(JSON.parse(body));
+    }
+  )
+});
 
 module.exports = router;

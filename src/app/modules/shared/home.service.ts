@@ -26,7 +26,8 @@ export class HomeService {
   }
 
   getNewsApiOrg(category: string, country_code: string) {
-    return this.http.get(`https://newsapi.org/v2/top-headlines?country=${country_code}&category=${category}&apiKey=c4690557cb694d7190d307c5cabf36e0`);
+    //return this.http.get(`https://newsapi.org/v2/top-headlines?country=${country_code}&category=${category}&apiKey=c4690557cb694d7190d307c5cabf36e0`);
+    return this.http.get(`${environment.application.apiUrl}/newsapi/${country_code}/${category}`);
   }
 
   getGoogleTrends(country_code: string) {
