@@ -12,23 +12,25 @@ export class AppComponent implements OnInit {
 
   locationData: any;
 
-  constructor(
-    @Inject(PLATFORM_ID) private platformId: object, private homeService: HomeService) {
-  }
+  // constructor(
+  //   @Inject(PLATFORM_ID) private platformId: object, private homeService: HomeService) {
+  // }
+
+  constructor(private homeService: HomeService) { }
 
   ngOnInit(): void {
     this.fetchUserLocation();
 
-    if (isPlatformBrowser(this.platformId)) {
-      const navMain = document.getElementById('navbarCollapse');
-      if (navMain) {
-        navMain.onclick = function onClick() {
-          if (navMain) {
-            navMain.classList.remove("show");
-          }
-        }
-      }
-    }
+    // if (isPlatformBrowser(this.platformId)) {
+    //   const navMain = document.getElementById('navbarCollapse');
+    //   if (navMain) {
+    //     navMain.onclick = function onClick() {
+    //       if (navMain) {
+    //         navMain.classList.remove("show");
+    //       }
+    //     }
+    //   }
+    // }
   }
   
   
