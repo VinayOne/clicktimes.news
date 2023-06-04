@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Inject, PLATFORM_ID } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+// import { Inject, PLATFORM_ID } from '@angular/core';
+// import { isPlatformBrowser } from '@angular/common';
 import { HomeService } from './modules/shared/home.service';
 
 @Component({
