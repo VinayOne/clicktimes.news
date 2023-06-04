@@ -35,7 +35,7 @@ app.use(cors());
 
 
   router.route('/trending/:country_code').get(async (req, res) => {
-    res.set('Access-Control-Allow-Origin', 'http://localhost:3000');
+    res.set('Access-Control-Allow-Origin', 'https://www.sancharseva.com');
     let feed = await parser.parseURL(`https://trends.google.com/trends/trendingsearches/daily/rss?geo=${req.params.country_code}`);
     res.status(200).json({response : 'success', data: feed});
   });
@@ -72,7 +72,7 @@ request.then((result) => {
 // https://newsapi.org/v2/top-headlines?country=us&category=sports&apiKey=c4690557cb694d7190d307c5cabf36e0
 
 router.route('/newsapi/:country_code/:category').get((req, res) => {
-  res.set('Access-Control-Allow-Origin', 'http://localhost:3000');
+  res.set('Access-Control-Allow-Origin', 'https://www.sancharseva.com');
   const backendUrl = `https://newsapi.org/v2/top-headlines?country=${req.params.country_code}&category=${req.params.category}&apiKey=c4690557cb694d7190d307c5cabf36e0`;
   axios.get(backendUrl).then(response => res.send(response?.data));
 });
