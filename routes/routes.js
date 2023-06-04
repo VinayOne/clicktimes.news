@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+const cors = require("cors");
 
 const router = express.Router();
 let Parser = require('rss-parser');
@@ -16,10 +17,12 @@ const mailjet = Mailjet.apiConnect(
   '92149bc982866de5f94075411b29024c',
 );
 
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  next();
-});
+app.use(cors());
+
+// app.use((req, res, next) => {
+//   res.header('Access-Control-Allow-Origin', '*');
+//   next();
+// });
 
 // const requestTime = (async (req, res, next) => {
 //   req.requestTime = await Date.now();
