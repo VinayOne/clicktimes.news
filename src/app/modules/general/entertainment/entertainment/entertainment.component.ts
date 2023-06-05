@@ -21,9 +21,11 @@ export class EntertainmentComponent implements OnInit {
   constructor(private homeService: HomeService) { }
 
   ngOnInit(): void {
+    const localLocation = sessionStorage.getItem('localLocation') || null;
     const cachedArticles = sessionStorage.getItem('savedEntArticles') || null;
-    if(cachedArticles) {
+    if(cachedArticles && localLocation) {
       this.articles = JSON.parse(cachedArticles);
+      this.locationData = JSON.parse(localLocation);
     } else {
       setTimeout(() => {
       const localLocation = sessionStorage.getItem('localLocation') || null;

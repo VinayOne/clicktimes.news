@@ -21,9 +21,11 @@ export class HealthComponent {
   constructor(private homeService: HomeService) { }
 
   ngOnInit(): void {
+    const localLocation = sessionStorage.getItem('localLocation') || null;
     const cachedArticles = sessionStorage.getItem('savedHealthArticles') || null;
-    if(cachedArticles) {
+    if(cachedArticles && localLocation) {
       this.articles = JSON.parse(cachedArticles);
+      this.locationData = JSON.parse(localLocation);
     } else {
       setTimeout(() => {
       const localLocation = sessionStorage.getItem('localLocation') || null;
