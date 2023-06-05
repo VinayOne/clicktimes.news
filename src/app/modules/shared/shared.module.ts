@@ -7,6 +7,7 @@ import { MaterialModule } from './material.module';
 import { GoogleTrendsComponent } from '../general/google-trends/google-trends.component';
 import { SearchResultComponent } from '../general/search-result/search-result.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { DateComponent } from './date/date.component';
 
 
 
@@ -16,7 +17,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     HeaderComponent,
     FooterComponent,
     GoogleTrendsComponent,
-    SearchResultComponent
+    SearchResultComponent,
+    DateComponent
   ],
   imports: [
     CommonModule,
@@ -31,7 +33,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     GoogleTrendsComponent,
     SearchResultComponent,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    DateComponent
   ]
 })
 export class SharedModule { }

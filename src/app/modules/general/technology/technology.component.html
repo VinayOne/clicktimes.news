@@ -17,13 +17,13 @@
           {{title}} &nbsp;
           <img [src]="locationData?.country_flag" class="countryFlag" />
           <span class="timeDate">
-           {{locationData?.time_zone.current_time | date: 'medium' }}
+            <app-date></app-date>
           </span>
         </p>
         <p class="trending" *ngIf="searched">
           Results found : {{searchedData?.totalEstimatedMatches || 0}} &nbsp;&nbsp;<button type="button" class="btn btn-outline-light btn-sm" (click)="clearSearch(searchTxt)">Clear Search</button>
           <span class="timeDate">
-            {{locationData?.time_zone.current_time | date: 'medium' }}
+            <app-date></app-date>
            </span>
         </p>
         <mat-progress-bar mode="indeterminate" *ngIf="!articles || searchBusy"></mat-progress-bar>
