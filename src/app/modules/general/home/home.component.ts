@@ -39,7 +39,7 @@ export class HomeComponent implements OnInit{
           this.locationData = JSON.parse(localLocation);
           this.getNewsArticles();          
         }        
-      },700);
+      },1000);
     }
   }
 
