@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-// import { Inject, PLATFORM_ID } from '@angular/core';
-// import { isPlatformBrowser } from '@angular/common';
+import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+import { isPlatformBrowser } from '@angular/common';
 import { HomeService } from './modules/shared/home.service';
 
 @Component({
@@ -10,13 +10,14 @@ import { HomeService } from './modules/shared/home.service';
 })
 export class AppComponent implements OnInit {
 
-  // constructor(
-  //   @Inject(PLATFORM_ID) private platformId: object, private homeService: HomeService) {
-  // }
+  static isBrowser = new BehaviorSubject<boolean>(false);
 
-  constructor(private homeService: HomeService) { }
+  constructor(@Inject(PLATFORM_ID) private platformId: any, private homeService: HomeService) {
+    AppComponent.isBrowser.next(isPlatformBrowser(platformId));
+   }
 
   ngOnInit(): void {
+    this.homeService.getGeoLocation();
     // if (isPlatformBrowser(this.platformId)) {
     //   const navMain = document.getElementById('navbarCollapse');
     //   if (navMain) {

@@ -22,7 +22,10 @@
             "tsConfig": "tsconfig.app.json",
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              "src/site.webmanifest",
+              "src/sitemap.xml",
+              "src/robots.txt"
             ],
             "styles": [
               "@angular/material/prebuilt-themes/pink-bluegrey.css",
@@ -96,7 +99,10 @@
             "tsConfig": "tsconfig.spec.json",
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              "src/site.webmanifest",
+              "src/sitemap.xml",
+              "src/robots.txt"
             ],
             "styles": [
               "@angular/material/prebuilt-themes/pink-bluegrey.css",

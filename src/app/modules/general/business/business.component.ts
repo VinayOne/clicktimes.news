@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
 import { HomeService } from '../../shared/home.service';
+import { LocalstorageService } from '../../shared/localstrorage.service';
+import { environment } from 'src/environments/environment';
+import { SeoService } from '../../shared/seo.service';
+import { Meta, Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-business',
@@ -16,25 +20,49 @@ export class BusinessComponent {
   newsCategory = 'business';
   title = 'Business';
   searchBusy = false;
+  hostName = environment.application.url;
 
-  constructor(private homeService: HomeService) { }
+  constructor(
+    private homeService: HomeService, 
+    private localStorage: LocalstorageService, 
+    private seoService: SeoService,
+    private pageTitle: Title,
+    private meta: Meta
+    ) { }
 
-  ngOnInit(): void {
-    const cachedArticles = sessionStorage.getItem('savedBusinessArticles') || null;
-    if(cachedArticles) {
+  ngOnInit(): void {  
+    this.updateSeoProperties();  
+    const cachedArticles = this.localStorage.getItem('savedBusinessArticles') || null;
+    if (cachedArticles) {
       this.articles = JSON.parse(cachedArticles);
     } else {
-      this.getNewsArticles();      
+      this.getNewsArticles();
     }
   }
 
+  updateSeoProperties() {
+    this.seoService.updateCanonicalUrl(`${this.hostName}/business`);
+    this.pageTitle.setTitle('Click Times News - Top Headlines | Business')
+  }
+
   getNewsArticles() {
-    this.homeService.getNewsApiOrg(this.newsCategory).subscribe({
+    let visitorCountry: any;
+    this.homeService.getGeoLocation().subscribe({
       next: response => {
-          if(response) {
-            this.articles = response;
-            sessionStorage.setItem('savedBusinessArticles', JSON.stringify(this.articles));
-          }       
+        if (response) {
+          visitorCountry = response;
+          this.homeService.getNewsApiOrg(this.newsCategory, visitorCountry.country_code2).subscribe({
+            next: response => {
+              if (response) {
+                this.articles = response;
+                this.localStorage.setItem('savedBusinessArticles', JSON.stringify(this.articles));
+              }
+            },
+            error: err => {
+              console.log('Error: ', err);
+            }
+          });
+        }
       },
       error: err => {
         console.log('Error: ', err);
@@ -48,7 +76,7 @@ export class BusinessComponent {
     const querytxt = queryTxt.split(' ').join('+');
     this.homeService.serachNewsArticles(querytxt).subscribe({
       next: response => {
-        if(response) {
+        if (response) {
           this.searchedData = response;
           this.searchBusy = false;
         }

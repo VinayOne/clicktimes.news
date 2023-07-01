@@ -1,0 +1,3 @@
+User-agent: *
+Disallow:
+Sitemap: https://www.clicktimes.news/sitemap.xml

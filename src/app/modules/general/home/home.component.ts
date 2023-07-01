@@ -1,18 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import { HomeService } from '../../shared/home.service';
+import { LocalstorageService } from '../../shared/localstrorage.service';
+import { SeoService } from '../../shared/seo.service';
+import { Meta, Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit{
-
-  name = environment.application.name;
-  version = environment.application.version;
-  bootstrap = environment.application.bootstrap;
-  fontawesome = environment.application.fontawesome;
+export class HomeComponent implements OnInit {
 
   newNetworkLogo = './assets/params/images/logo/news-network-logo.jpg';
   articles: any;
@@ -22,30 +20,49 @@ export class HomeComponent implements OnInit{
   newsCategory = 'general';
   title = 'Top Headlines';
   searchBusy = false;
+  hostName = environment.application.url;
 
-  constructor(private homeService: HomeService) { }
+  constructor
+  (private homeService: HomeService, 
+  private localStorage: LocalstorageService, 
+  private seoService: SeoService,
+  private meta: Meta,
+  private pageTitle: Title
+  ) { }
 
   ngOnInit(): void {
-    const cachedArticles = sessionStorage.getItem('savedArticles') || null;
-    if(cachedArticles) {
+    this.seoService.updateCanonicalUrl(`${this.hostName}`);
+    const cachedArticles = this.localStorage.getItem('savedArticles') || null;
+    if (cachedArticles) {
       this.articles = JSON.parse(cachedArticles);
     } else {
       this.getNewsArticles();
+    }
   }
-}
 
   getNewsArticles() {
-    this.homeService.getNewsApiOrg(this.newsCategory).subscribe({
+    let visitorCountry: any;
+    this.homeService.getGeoLocation().subscribe({
       next: response => {
-          if(response) {
-            this.articles = response;
-            sessionStorage.setItem('savedArticles', JSON.stringify(this.articles));
-          }   
+        if (response) {
+          visitorCountry = response;
+          this.homeService.getNewsApiOrg(this.newsCategory, visitorCountry.country_code2).subscribe({
+            next: response => {
+              if (response) {
+                this.articles = response;
+                this.localStorage.setItem('savedArticles', JSON.stringify(this.articles));
+              }
+            },
+            error: err => {
+              console.log('Error: ', err);
+            }
+          });
+        }
       },
       error: err => {
         console.log('Error: ', err);
       }
-    })   
+    })
   }
 
   getCurrency() {
@@ -53,10 +70,10 @@ export class HomeComponent implements OnInit{
     let sortcurrency: any;
     this.homeService.getLatestCurrencyValue().subscribe({
       next: response => {
-        if(response) {
+        if (response) {
           //const {data.INR} = response || {}
           currency.push(response);
-          for(const i of currency) {
+          for (const i of currency) {
             console.log(currency.data[i])
           }
         }
@@ -74,7 +91,7 @@ export class HomeComponent implements OnInit{
     this.homeService.serachNewsArticles(querytxt).subscribe({
       next: response => {
         console.log('respnse: ', response);
-        if(response) {
+        if (response) {
           this.searchedData = response;
           this.searchBusy = false;
         }

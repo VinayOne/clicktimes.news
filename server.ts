@@ -16,7 +16,8 @@ export function app(): express.Express {
 
   // Our Universal express-engine (found @ https://github.com/angular/universal/tree/main/modules/express-engine)
   server.engine('html', ngExpressEngine({
-    bootstrap: AppServerModule
+    bootstrap: AppServerModule,
+    inlineCriticalCss: false
   }));
 
   server.set('view engine', 'html');
@@ -40,7 +41,7 @@ export function app(): express.Express {
 }
 
 function run(): void {
-  const port = process.env['PORT'] || 4000;
+  const port = process.env['PORT'] || 3300;
 
   // Start up the Node server
   const server = app();

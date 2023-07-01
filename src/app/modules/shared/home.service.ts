@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { environment } from 'src/environments/environment';
 
 const headers = new HttpHeaders({
@@ -15,22 +15,25 @@ const headerOptions = { headers: headers };
 })
 export class HomeService {
 
+  visitorData: any;
+
   constructor(private http: HttpClient) { }
 
  getGeoLocation() {
-    return this.http.get('https://api.ipgeolocation.io/ipgeo?apiKey=f620de073d29432194a9841daed4b538');
-  }
+   return this.http.get('https://api.ipgeolocation.io/ipgeo?apiKey=f620de073d29432194a9841daed4b538');
+  };
+
 
   getNewsData(country_code: string) {
     return this.http.get(`https://newsdata.io/api/1/news?apikey=pub_22872da7e3e122d7aa03c0f0aaae2a8e808b9&country=${country_code}`);
   }
 
-  getNewsApiOrg(category: string) {
-    return this.http.get(`${environment.application.apiUrl}/newsapi/${category}`);
+  getNewsApiOrg(category: string, country_code: string) {
+    return this.http.get(`${environment.application.apiUrl}/newsapi/${category}/${country_code}`);
   }
 
-  getGoogleTrends() {
-    return this.http.get(`${environment.application.apiUrl}/trending`);
+  getGoogleTrends(country_code: string) {
+    return this.http.get(`${environment.application.apiUrl}/trending/${country_code}`);
   }
 
   getLatestCurrencyValue() {
