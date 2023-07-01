@@ -25,22 +25,17 @@ export class HomeService {
     return this.http.get(`https://newsdata.io/api/1/news?apikey=pub_22872da7e3e122d7aa03c0f0aaae2a8e808b9&country=${country_code}`);
   }
 
-  getNewsApiOrg(category: string, country_code: string) {
-    //return this.http.get(`https://newsapi.org/v2/top-headlines?country=${country_code}&category=${category}&apiKey=c4690557cb694d7190d307c5cabf36e0`);
-    return this.http.get(`${environment.application.apiUrl}/newsapi/${country_code}/${category}`);
+  getNewsApiOrg(category: string) {
+    return this.http.get(`${environment.application.apiUrl}/newsapi/${category}`);
   }
 
-  getGoogleTrends(country_code: string) {
-    return this.http.get(`${environment.application.apiUrl}/trending/${country_code}`);
+  getGoogleTrends() {
+    return this.http.get(`${environment.application.apiUrl}/trending`);
   }
 
   getLatestCurrencyValue() {
     return this.http.get(`https://api.freecurrencyapi.com/v1/latest?apikey=uWl7dMvWDIehJcVy6MIpO9dW5XAlhLP3lDeMyUnz`);
   }
-
-  // serachNewsArticles(querytext: string) {
-  //   return this.http.get(`https://newsapi.org/v2/everything?q=${querytext}&apiKey=c4690557cb694d7190d307c5cabf36e0`);
-  // }
 
   serachNewsArticles(queryText: string) {
     return this.http.get(`https://bing-news-search1.p.rapidapi.com/news/search?q=${queryText}&freshness=DAY&textFormat=RAW&safeSearch=Off&offset=0&count=30`, headerOptions);

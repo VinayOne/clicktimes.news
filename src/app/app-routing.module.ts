@@ -5,7 +5,7 @@ import { HomeComponent } from './modules/general/home/home.component';
 import { NotFoundComponent } from './modules/general/not-found/not-found.component';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent, },
+  { path: '', component: HomeComponent },
   {
     path: 'bootstrap',
     loadChildren: () => import('./modules/application/example-bootstrap/tutorial.module')

@@ -18,8 +18,13 @@
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 11px 10px 0 rgba(0, 0, 0, 0.12);
     background-color: rgb(184, 0, 0);
   }
+
+  .navbar-brand img{
+    width: 175px;
+    height: auto;
+  }
   
-  .nga-navbar-logo {
+  /* .nga-navbar-logo {
     font-weight: 700;
   }
   
@@ -35,4 +40,4 @@
   
   .nga-logo:hover {
     color: rgba(255, 255, 255, 0.75);
-  }
+  } */

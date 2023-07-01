@@ -16,8 +16,17 @@ const mailjet = Mailjet.apiConnect(
   '77e6a56444b50c0566f3553ad62e1c32',
   '92149bc982866de5f94075411b29024c',
 );
+let locationData = [];
+const locationUrl = 'https://api.ipgeolocation.io/ipgeo?apiKey=f620de073d29432194a9841daed4b538';
 
 app.use(cors());
+
+(function() {
+  axios.get(locationUrl).then(response => {
+    if(response) locationData.push(response?.data);    
+  });
+})();
+
 
 // app.use((req, res, next) => {
 //   res.header('Access-Control-Allow-Origin', '*');
@@ -30,12 +39,11 @@ app.use(cors());
 // })
 
 // app.use(requestTime);
-//app.use(googleTrends);
 
 
 
-  router.route('/trending/:country_code').get(async (req, res) => {
-    let feed = await parser.parseURL(`https://trends.google.com/trends/trendingsearches/daily/rss?geo=${req.params.country_code}`);
+  router.route('/trending').get(async (req, res) => {
+    let feed = await parser.parseURL(`https://trends.google.com/trends/trendingsearches/daily/rss?geo=${locationData[0].country_code2}`);
     res.status(200).json({response : 'success', data: feed});
   });
 
@@ -65,13 +73,10 @@ request.then((result) => {
   .catch((err) => {
     console.log(err.statusCode);
   })
-
 });
 
-// https://newsapi.org/v2/top-headlines?country=us&category=sports&apiKey=c4690557cb694d7190d307c5cabf36e0
-
-router.route('/newsapi/:country_code/:category').get((req, res) => {
-  const backendUrl = `https://newsapi.org/v2/top-headlines?country=${req.params.country_code}&category=${req.params.category}&apiKey=c4690557cb694d7190d307c5cabf36e0`;
+router.route('/newsapi/:category').get((req, res) => {
+  const backendUrl = `https://newsapi.org/v2/top-headlines?country=${locationData[0]?.country_code2}&category=${req.params.category}&apiKey=c4690557cb694d7190d307c5cabf36e0`;
   axios.get(backendUrl).then(response => res.send(response?.data));
 });
 

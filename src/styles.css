@@ -3,4 +3,4 @@ body {
   font-family: "Roboto", sans-serif;
 }
 html, body { height: 100%;  margin: 0;  background-repeat: no-repeat; background-attachment: fixed;}
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-image: linear-gradient(to bottom, rgb(233, 233, 233), rgb(244, 67, 54));}
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; /*background-image: linear-gradient(to bottom, rgb(233, 233, 233), rgb(244, 67, 54));*/ background-color: lightgray;}

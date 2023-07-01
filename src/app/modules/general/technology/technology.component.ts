@@ -10,7 +10,6 @@ export class TechnologyComponent {
 
   newNetworkLogo = './assets/params/images/logo/news-network-logo.jpg';
   articles: any;
-  locationData: any;
   currencyData: any;
   searched = false;
   searchedData: any;
@@ -21,26 +20,16 @@ export class TechnologyComponent {
   constructor(private homeService: HomeService) { }
 
   ngOnInit(): void {
-    const localLocation = sessionStorage.getItem('localLocation') || null;
     const cachedArticles = sessionStorage.getItem('savedTecArticles') || null;
-    if(cachedArticles && localLocation) {
+    if(cachedArticles) {
       this.articles = JSON.parse(cachedArticles);
-      this.locationData = JSON.parse(localLocation);
     } else {
-      setTimeout(() => {
-      const localLocation = sessionStorage.getItem('localLocation') || null;
-      if(localLocation) {
-      this.locationData = JSON.parse(localLocation);
-      this.getNewsArticles();
-    }
-      },700)
-      
+      this.getNewsArticles();      
     }
   }
 
   getNewsArticles() {
-    if(this.locationData) {
-    this.homeService.getNewsApiOrg(this.newsCategory, this.locationData.country_code2).subscribe({
+    this.homeService.getNewsApiOrg(this.newsCategory).subscribe({
       next: response => {
           if(response) {
             this.articles = response;
@@ -51,7 +40,6 @@ export class TechnologyComponent {
         console.log('Error: ', err);
       }
     })
-    }
   }
 
   search(queryTxt: string) {

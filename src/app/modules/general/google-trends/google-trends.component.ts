@@ -8,7 +8,6 @@ import { HomeService } from '../../shared/home.service';
 })
 export class GoogleTrendsComponent implements OnInit {
 
-  locationData: any;
   latestTrends: any;
 
   constructor(private homeService: HomeService) { }
@@ -18,19 +17,13 @@ export class GoogleTrendsComponent implements OnInit {
     if(googleTrends) {
       this.latestTrends = JSON.parse(googleTrends);
     } else {
-      setTimeout(() => {
-        const localLocation = sessionStorage.getItem('localLocation') || null;
-        if (localLocation) {
-          this.locationData = JSON.parse(localLocation);
-          this.getGoogleLatestTrends();
-        }
-      }, 700);
+      this.getGoogleLatestTrends();
     }
   }
 
   getGoogleLatestTrends() {
     let result: any;
-    this.homeService.getGoogleTrends(this.locationData.country_code2).subscribe({
+    this.homeService.getGoogleTrends().subscribe({
       next: async response => {
         if (response) {
           result = await response;
