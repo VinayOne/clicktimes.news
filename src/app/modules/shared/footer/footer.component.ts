@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./footer.component.css']
 })
 export class FooterComponent {
-  footerUrl = 'https://www.newsnetwork.com/';
-  footerLink = 'www.newsnetwork.com';
+  footerUrl = 'https://www.clicktimes.news/';
+  footerLink = 'www.clicktimes.news';
 
 }

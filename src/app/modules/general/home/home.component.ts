@@ -22,8 +22,8 @@ export class HomeComponent implements OnInit {
   searchBusy = false;
   hostName = environment.application.url;
 
-  constructor
-  (private homeService: HomeService, 
+  constructor (
+  private homeService: HomeService, 
   private localStorage: LocalstorageService, 
   private seoService: SeoService,
   private meta: Meta,

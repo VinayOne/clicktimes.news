@@ -12,12 +12,11 @@ export class AppComponent implements OnInit {
 
   static isBrowser = new BehaviorSubject<boolean>(false);
 
-  constructor(@Inject(PLATFORM_ID) private platformId: any, private homeService: HomeService) {
+  constructor(@Inject(PLATFORM_ID) private platformId: object, private homeService: HomeService) {
     AppComponent.isBrowser.next(isPlatformBrowser(platformId));
    }
 
   ngOnInit(): void {
-    this.homeService.getGeoLocation();
     // if (isPlatformBrowser(this.platformId)) {
     //   const navMain = document.getElementById('navbarCollapse');
     //   if (navMain) {

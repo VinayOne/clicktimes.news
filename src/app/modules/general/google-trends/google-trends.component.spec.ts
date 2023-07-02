@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { GoogleTrendsComponent } from './google-trends.component';
 
 describe('GoogleTrendsComponent', () => {
@@ -8,6 +8,7 @@ describe('GoogleTrendsComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
       declarations: [GoogleTrendsComponent]
     });
     fixture = TestBed.createComponent(GoogleTrendsComponent);

@@ -15,8 +15,6 @@ const headerOptions = { headers: headers };
 })
 export class HomeService {
 
-  visitorData: any;
-
   constructor(private http: HttpClient) { }
 
  getGeoLocation() {

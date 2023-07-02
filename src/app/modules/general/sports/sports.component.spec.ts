@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { SportsComponent } from './sports.component';
 
 describe('SportsComponent', () => {
@@ -8,6 +8,7 @@ describe('SportsComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
       declarations: [SportsComponent]
     });
     fixture = TestBed.createComponent(SportsComponent);
