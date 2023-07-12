@@ -21,6 +21,7 @@ export class HomeComponent implements OnInit {
   title = 'Top Headlines';
   searchBusy = false;
   hostName = environment.application.url;
+  currentDate = new Date();
 
   constructor (
   private homeService: HomeService, 
@@ -32,9 +33,16 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.seoService.updateCanonicalUrl(`${this.hostName}`);
-    const cachedArticles = this.localStorage.getItem('savedArticles') || null;
+    const cachedArticles = this.localStorage.getItem('savedArticles') || '';    
     if (cachedArticles) {
-      this.articles = JSON.parse(cachedArticles);
+      const parsedData = JSON.parse(cachedArticles);
+      const savedTime = parsedData?.time;
+      const timeDiff = this.getTimeDiff(savedTime);
+      if(timeDiff <= 4) {
+        this.articles = parsedData.news;
+      } else {
+        this.getNewsArticles();
+      }      
     } else {
       this.getNewsArticles();
     }
@@ -50,7 +58,7 @@ export class HomeComponent implements OnInit {
             next: response => {
               if (response) {
                 this.articles = response;
-                this.localStorage.setItem('savedArticles', JSON.stringify(this.articles));
+                this.localStorage.setItem('savedArticles', JSON.stringify({news: this.articles, time: this.currentDate}));
               }
             },
             error: err => {
@@ -106,6 +114,14 @@ export class HomeComponent implements OnInit {
   clearSearch(searchTxt: any) {
     searchTxt.value = '';
     this.searched = false;
+  }
+
+  getTimeDiff(savedTime: any) {
+    const savedTimeValue = new Date(savedTime);
+    const diff = Math.abs(this.currentDate.getTime() - savedTimeValue.getTime()) / 3600000;
+    //const diffInHours = diff/1000/60/60;
+    console.info('time difference: ', diff);
+    return diff;
   }
 
 }

@@ -2,6 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { HeaderComponent } from './modules/shared/header/header.component';
 
 describe('AppComponent', () => {
   beforeEach(() => TestBed.configureTestingModule({
@@ -9,7 +10,7 @@ describe('AppComponent', () => {
       HttpClientTestingModule,
       RouterTestingModule
     ],          
-    declarations: [AppComponent]
+    declarations: [AppComponent, HeaderComponent]
   }));
 
   it('should create the app', () => {

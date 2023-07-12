@@ -3,6 +3,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { ContactComponent } from './contact.component';
+import { SharedModule } from '../../shared/shared.module';
 
 describe('ContactComponent', () => {
   let component: ContactComponent;
@@ -12,7 +13,8 @@ describe('ContactComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
-        RouterTestingModule
+        RouterTestingModule,
+        SharedModule
       ],      
       declarations: [ContactComponent]
     });

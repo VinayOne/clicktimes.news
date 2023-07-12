@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { SportsComponent } from './sports.component';
+import { SharedModule } from '../../shared/shared.module';
 
 describe('SportsComponent', () => {
   let component: SportsComponent;
@@ -8,7 +9,7 @@ describe('SportsComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
+      imports: [HttpClientTestingModule, SharedModule],
       declarations: [SportsComponent]
     });
     fixture = TestBed.createComponent(SportsComponent);

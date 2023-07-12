@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { GoogleTrendsComponent } from './google-trends.component';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 describe('GoogleTrendsComponent', () => {
   let component: GoogleTrendsComponent;
@@ -8,7 +9,7 @@ describe('GoogleTrendsComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
+      imports: [HttpClientTestingModule, MatProgressBarModule],
       declarations: [GoogleTrendsComponent]
     });
     fixture = TestBed.createComponent(GoogleTrendsComponent);
