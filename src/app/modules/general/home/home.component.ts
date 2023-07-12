@@ -34,7 +34,7 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.seoService.updateCanonicalUrl(`${this.hostName}`);
     const cachedArticles = this.localStorage.getItem('savedArticles') || '';    
-    if (cachedArticles) {
+    if(cachedArticles) {
       const parsedData = JSON.parse(cachedArticles);
       const savedTime = parsedData?.time;
       const timeDiff = this.getTimeDiff(savedTime);
@@ -119,8 +119,6 @@ export class HomeComponent implements OnInit {
   getTimeDiff(savedTime: any) {
     const savedTimeValue = new Date(savedTime);
     const diff = Math.abs(this.currentDate.getTime() - savedTimeValue.getTime()) / 3600000;
-    //const diffInHours = diff/1000/60/60;
-    console.info('time difference: ', diff);
     return diff;
   }
 

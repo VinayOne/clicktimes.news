@@ -21,6 +21,7 @@ export class BusinessComponent {
   title = 'Business';
   searchBusy = false;
   hostName = environment.application.url;
+  currentDate = new Date();
 
   constructor(
     private homeService: HomeService, 
@@ -32,9 +33,16 @@ export class BusinessComponent {
 
   ngOnInit(): void {  
     this.updateSeoProperties();  
-    const cachedArticles = this.localStorage.getItem('savedBusinessArticles') || null;
-    if (cachedArticles) {
-      this.articles = JSON.parse(cachedArticles);
+    const cachedArticles = this.localStorage.getItem('savedBusinessArticles') || '';
+    if(cachedArticles) {
+      const parsedData = JSON.parse(cachedArticles);
+      const savedTime = parsedData?.time;
+      const timeDiff = this.getTimeDiff(savedTime);
+      if(timeDiff <= 4) {
+        this.articles = parsedData.news;
+      } else {
+        this.getNewsArticles();
+      }      
     } else {
       this.getNewsArticles();
     }
@@ -55,7 +63,7 @@ export class BusinessComponent {
             next: response => {
               if (response) {
                 this.articles = response;
-                this.localStorage.setItem('savedBusinessArticles', JSON.stringify(this.articles));
+                this.localStorage.setItem('savedBusinessArticles', JSON.stringify({news: this.articles, time: this.currentDate}));
               }
             },
             error: err => {
@@ -90,6 +98,12 @@ export class BusinessComponent {
   clearSearch(searchTxt: any) {
     searchTxt.value = '';
     this.searched = false;
+  }
+
+  getTimeDiff(savedTime: any) {
+    const savedTimeValue = new Date(savedTime);
+    const diff = Math.abs(this.currentDate.getTime() - savedTimeValue.getTime()) / 3600000;
+    return diff;
   }
 
 }
