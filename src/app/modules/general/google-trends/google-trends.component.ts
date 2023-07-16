@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HomeService } from '../../shared/home.service';
 import { LocalstorageService } from '../../shared/localstrorage.service';
+import { switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-google-trends',
@@ -16,48 +17,45 @@ export class GoogleTrendsComponent implements OnInit {
 
   ngOnInit(): void {
     const googleTrends = this.localStorage.getItem('googleTrendsLocal') || '';
-    if(googleTrends) {
+    if (googleTrends) {
       const parsedData = JSON.parse(googleTrends);
       const savedTime = parsedData?.time;
       const timeDiff = this.getTimeDiff(savedTime);
-      if(timeDiff <= 2) {
+      if (timeDiff <= 2) {
         this.latestTrends = parsedData.news;
       } else {
         this.getGoogleLatestTrends();
-      }      
+      }
     } else {
       this.getGoogleLatestTrends();
     }
   }
 
   getGoogleLatestTrends() {
-    let countryCode:any;
-    this.homeService.getGeoLocation().subscribe({
-      next: response => {
-        if(response) countryCode = response;        
+    let countryCode: any;
+    this.homeService.getGeoLocation().pipe(
+      switchMap((response) => {
+        countryCode = response;
+        return this.homeService.getGoogleTrends(countryCode.country_code2);
+      })
+    ).subscribe({
+      next: async response => {
         let result: any;
-        this.homeService.getGoogleTrends(countryCode.country_code2).subscribe({
-          next: async response => {
-            if (response) {
-              result = await response;
-              result.data.items.forEach(async (obj: any) => await this.renameKey(obj, 'ht:picture', 'ht_picture'));
-              result.data.items.forEach(async (obj: any) => await this.renameKey(obj, 'ht:news_item', 'ht_news_item'));
-              result.data.items.forEach(async (obj: any) => await this.renameKey(obj.ht_news_item, 'ht:news_item_snippet', 'ht_news_item_snippet'));
-              result.data.items.forEach(async (obj: any) => await this.renameKey(obj.ht_news_item, 'ht:news_item_url', 'ht_news_item_url'));
-              let updatedJson = await result;
-              this.latestTrends = await updatedJson;
-              this.localStorage.setItem('googleTrendsLocal', JSON.stringify({news: this.latestTrends, time: this.currentDate}));
-            }
-          },
-          error: err => {
-            console.log('Error: ', err);
-          }
-        })
+        if (response) {
+          result = await response;
+          result.data.items.forEach(async (obj: any) => await this.renameKey(obj, 'ht:picture', 'ht_picture'));
+          result.data.items.forEach(async (obj: any) => await this.renameKey(obj, 'ht:news_item', 'ht_news_item'));
+          result.data.items.forEach(async (obj: any) => await this.renameKey(obj.ht_news_item, 'ht:news_item_snippet', 'ht_news_item_snippet'));
+          result.data.items.forEach(async (obj: any) => await this.renameKey(obj.ht_news_item, 'ht:news_item_url', 'ht_news_item_url'));
+          let updatedJson = await result;
+          this.latestTrends = await updatedJson;
+          this.localStorage.setItem('googleTrendsLocal', JSON.stringify({ news: this.latestTrends, time: this.currentDate }));
+        }
       },
       error: err => {
         console.log('Error: ', err);
       }
-    });
+    })
   }
 
   renameKey(obj: any, oldKey: string, newKey: string) {

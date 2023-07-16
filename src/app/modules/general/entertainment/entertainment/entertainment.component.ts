@@ -4,6 +4,7 @@ import { LocalstorageService } from 'src/app/modules/shared/localstrorage.servic
 import { environment } from 'src/environments/environment';
 import { SeoService } from 'src/app/modules/shared/seo.service';
 import { Title } from '@angular/platform-browser';
+import { switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-entertainment',
@@ -28,15 +29,15 @@ export class EntertainmentComponent implements OnInit {
   ngOnInit(): void {
     this.updateSeoProperties();
     const cachedArticles = this.localStorage.getItem('savedEntArticles') || null;
-    if(cachedArticles) {
+    if (cachedArticles) {
       const parsedData = JSON.parse(cachedArticles);
       const savedTime = parsedData?.time;
       const timeDiff = this.getTimeDiff(savedTime);
-      if(timeDiff <= 4) {
+      if (timeDiff <= 4) {
         this.articles = parsedData.news;
       } else {
         this.getNewsArticles();
-      }      
+      }
     } else {
       this.getNewsArticles();
     }
@@ -49,21 +50,16 @@ export class EntertainmentComponent implements OnInit {
 
   getNewsArticles() {
     let visitorCountry: any;
-    this.homeService.getGeoLocation().subscribe({
+    this.homeService.getGeoLocation().pipe(
+      switchMap((response) => {
+        visitorCountry = response;
+        return this.homeService.getNewsApiOrg(this.newsCategory, visitorCountry.country_code2);
+      })
+    ).subscribe({
       next: response => {
         if (response) {
-          visitorCountry = response;
-          this.homeService.getNewsApiOrg(this.newsCategory, visitorCountry.country_code2).subscribe({
-            next: response => {
-              if (response) {
-                this.articles = response;
-                this.localStorage.setItem('savedEntArticles', JSON.stringify({news: this.articles, time: this.currentDate}));
-              }
-            },
-            error: err => {
-              console.log('Error: ', err);
-            }
-          });
+          this.articles = response;
+          this.localStorage.setItem('savedEntArticles', JSON.stringify({ news: this.articles, time: this.currentDate }));
         }
       },
       error: err => {

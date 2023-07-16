@@ -4,6 +4,7 @@ import { LocalstorageService } from '../../shared/localstrorage.service';
 import { environment } from 'src/environments/environment';
 import { SeoService } from '../../shared/seo.service';
 import { Title } from '@angular/platform-browser';
+import { switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-sports',
@@ -49,21 +50,16 @@ export class SportsComponent {
 
   getNewsArticles() {
     let visitorCountry: any;
-    this.homeService.getGeoLocation().subscribe({
+    this.homeService.getGeoLocation().pipe(
+      switchMap((response) => {
+        visitorCountry = response;
+        return this.homeService.getNewsApiOrg(this.newsCategory, visitorCountry.country_code2);
+      })
+    ).subscribe({
       next: response => {
         if (response) {
-          visitorCountry = response;
-          this.homeService.getNewsApiOrg(this.newsCategory, visitorCountry.country_code2).subscribe({
-            next: response => {
-              if (response) {
-                this.articles = response;
-                this.localStorage.setItem('savedSportsArticles', JSON.stringify({news: this.articles, time: this.currentDate}));
-              }
-            },
-            error: err => {
-              console.log('Error: ', err);
-            }
-          });
+          this.articles = response;
+          this.localStorage.setItem('savedSportsArticles', JSON.stringify({ news: this.articles, time: this.currentDate }));
         }
       },
       error: err => {
