@@ -13,7 +13,7 @@ import { switchMap } from 'rxjs';
 })
 export class EntertainmentComponent implements OnInit {
 
-  newNetworkLogo = './assets/params/images/logo/news-network-logo.jpg';
+  newNetworkLogo = './assets/params/images/logo/click-times-logo.jpg';
   articles: any;
   currencyData: any;
   searched = false;
