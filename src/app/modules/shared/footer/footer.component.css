@@ -2,7 +2,7 @@
 .nga-footer {
     background-color: #3a3939;
     color: white;
-    position: absolute;
+    position: relative;
     bottom: 0;
     width: 100%;
   }

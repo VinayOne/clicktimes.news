@@ -6,11 +6,11 @@ import { SeoService } from '../../shared/seo.service';
 import { Meta, Title } from '@angular/platform-browser';
 
 @Component({
-  selector: 'app-about',
-  templateUrl: './about.component.html',
-  styleUrls: ['./about.component.css']
+  selector: 'app-disclaimer',
+  templateUrl: './disclaimer.component.html',
+  styleUrls: ['./disclaimer.component.css']
 })
-export class AboutComponent {
+export class DisclaimerComponent {
 
   newNetworkLogo = './assets/params/images/logo/click-times-logo.jpg';
   articles: any;
@@ -18,7 +18,7 @@ export class AboutComponent {
   searched = false;
   searchedData: any;
   newsCategory = 'general';
-  title = 'About Us';
+  title = 'Disclaimer';
   searchBusy = false;
   hostName = environment.application.url;
   currentDate = new Date();
@@ -34,8 +34,6 @@ export class AboutComponent {
   ngOnInit(): void {
     this.seoService.updateCanonicalUrl(`${this.hostName}`);
   }
-
-  
 
   search(queryTxt: string) {
     this.searched = true;

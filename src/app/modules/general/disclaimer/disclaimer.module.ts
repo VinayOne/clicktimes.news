@@ -2,23 +2,23 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from '../../shared/shared.module';
 import { MaterialModule } from '../../shared/material.module';
-import { AboutComponent } from './about.component';
-import { AboutRoutingModule } from './about-routing.module';
+import { DisclaimerComponent } from './disclaimer.component';
+import { DisclaimerRoutingModule } from './disclaimer-routing.module';
+
+
 
 @NgModule({
+  declarations: [
+    DisclaimerComponent
+  ],
   imports: [
     CommonModule,
     SharedModule,
     MaterialModule,
-    AboutRoutingModule
+    DisclaimerRoutingModule
   ],
   exports: [
-    AboutComponent
-  ],
-  declarations: [
-    AboutComponent
-  ],
-  providers: [
-  ],
+    DisclaimerComponent
+  ]
 })
-export class AboutModule { }
+export class DisclaimerModule { }

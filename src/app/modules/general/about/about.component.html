@@ -1,3 +1,80 @@
-<div class="container py-5">
-    <p class="text-center">about works!</p>
+<div class="container py-3">
+  <div class="row mb-2">
+    <div class="col-12">
+      <mat-card class="searchBox">
+        <mat-card-content>
+          <div class="input-group">
+            <input type="text" class="form-control" #searchTxt placeholder="Search" />
+            <button type="button" class="btn btn-outline-danger me-2" (click)="search(searchTxt.value)">Go</button>
+          </div>          
+        </mat-card-content>
+      </mat-card>
+    </div>
   </div>
+  <div class="row mb-2">
+    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+      <p class="trending" *ngIf="!searched">
+        {{title}} &nbsp;
+        <!-- <img [src]="locationData?.country_flag" class="countryFlag" /> -->
+        <span class="timeDate">
+          <app-date></app-date>
+        </span>
+      </p>
+      <p class="trending" *ngIf="searched">
+        Results found : {{searchedData?.totalEstimatedMatches || 0}} &nbsp;&nbsp;<button type="button" class="btn btn-outline-light btn-sm" (click)="clearSearch(searchTxt)">Clear Search</button>
+        <span class="timeDate">
+          <app-date></app-date>
+         </span>
+      </p>
+      <mat-progress-bar mode="indeterminate" *ngIf="searchBusy"></mat-progress-bar>
+      <app-search-result *ngIf="searched" [searchResult]="searchedData?.value"></app-search-result>
+      <div class="row" *ngIf="!searched">
+          <div class="col-12">
+            <!-- <a class="news-url" [href]="news.url" target="_new">
+            <mat-card class="example-card">
+              <mat-card-header>
+                <mat-card-title>{{news.title | slice:0:100 }}..</mat-card-title>          
+              </mat-card-header>
+              <img mat-card-image [src]="news.urlToImage || newNetworkLogo" [alt]="news.title">
+              <mat-card-content>
+                <mat-card-subtitle>Source: {{news.source.name}} | {{news.publishedAt | date: 'medium'}}</mat-card-subtitle>
+                <p>
+                  {{news.description }}
+                </p>
+              </mat-card-content>
+            </mat-card>
+            </a> -->
+            <mat-card class="searchBox">
+              <mat-card-content>
+                <h1>Welcome to ClickTimes.news!</h1>
+                <h2>Stay Informed, Stay Curious</h2>
+                <p>
+                  At ClickTimes.News, we believe that knowledge is the currency of the digital age. Our mission is to empower readers with accurate, insightful, and thought-provoking news and stories. Whether you're a tech enthusiast, a culture connoisseur, or a curious soul, we've got something for you.
+                </p>
+                <h2>What Sets Us Apart?</h2>
+                  <ol>
+                    <li><strong>Diverse Perspectives:</strong> Our team of passionate journalists spans the globe, bringing you stories from every corner of the world. From the bustling streets of Tokyo to the serene landscapes of Iceland, we're here to connect you with the pulse of humanity.</li>
+                    <li><strong>In-Depth Analysis:</strong> We don't just skim the surface; we dive deep. Our articles go beyond headlines, exploring the nuances, implications, and hidden gems behind the news. Because understanding matters.</li>
+                    <li><strong>Interactive Features:</strong> ClickTimes.News isn't a monologue; it's a conversation. Engage with our interactive quizzes, polls, and comment sections. Your voice matters, and we're listening.</li>
+                  </ol>
+                <h2>What to Expect?</h2>
+                  <ul>
+                    <li><strong>Tech Buzz:</strong> Uncover the latest gadgets, breakthroughs, and innovations. From AI to blockchain, we've got your geek fix.</li>
+                    <li><strong>Culture Kaleidoscope:</strong> Explore art, music, literature, and pop culture. Because life is richer when you dance to different beats.</li>
+                    <li><strong>Spotlight Interviews:</strong> Meet the minds shaping our world. From visionary entrepreneurs to unsung heroes, we bring you their stories.</li>
+                  </ul>
+                <h2>Join the ClickTimes Community</h2>
+                <p>Subscribe, bookmark, or follow us on social media. Let's embark on this journey together. ClickTimes.News—where curiosity meets clarity.</p>
+                <p>Remember, knowledge is the spark that ignites change. Click, read, and let your mind wander.</p>
+                <p>🔗 Visit ClickTimes.news</p>
+              </mat-card-content>
+            </mat-card>
+          </div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+      <p class="trending">Trending</p>
+      <app-google-trends></app-google-trends>
+    </div>    
+  </div>
+</div>

@@ -2,23 +2,23 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from '../../shared/shared.module';
 import { MaterialModule } from '../../shared/material.module';
-import { AboutComponent } from './about.component';
-import { AboutRoutingModule } from './about-routing.module';
+import { PrivacyPolicyComponent } from './privacy-policy.component';
+import { PrivacyPolicyRoutingModule } from './privacy-policy-routing.module';
+
+
 
 @NgModule({
+  declarations: [
+    PrivacyPolicyComponent
+  ],
   imports: [
     CommonModule,
     SharedModule,
     MaterialModule,
-    AboutRoutingModule
+    PrivacyPolicyRoutingModule
   ],
   exports: [
-    AboutComponent
-  ],
-  declarations: [
-    AboutComponent
-  ],
-  providers: [
-  ],
+    PrivacyPolicyComponent
+  ]
 })
-export class AboutModule { }
+export class PrivacyPolicyModule { }

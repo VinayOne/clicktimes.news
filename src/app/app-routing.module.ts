@@ -71,6 +71,16 @@ const routes: Routes = [
     loadChildren: () => import('./modules/general/business/business.module')
       .then(mod => mod.BusinessModule)
   },
+  {
+    path: 'privacy-policy',
+    loadChildren: () => import('./modules/general/privacy-policy/privacy-policy.module')
+      .then(mod => mod.PrivacyPolicyModule)
+  },
+  {
+    path: 'disclaimer',
+    loadChildren: () => import('./modules/general/disclaimer/disclaimer.module')
+      .then(mod => mod.DisclaimerModule)
+  },
   { path: '**', component: NotFoundComponent }
 ];
 

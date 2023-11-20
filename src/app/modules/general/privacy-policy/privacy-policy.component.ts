@@ -6,11 +6,11 @@ import { SeoService } from '../../shared/seo.service';
 import { Meta, Title } from '@angular/platform-browser';
 
 @Component({
-  selector: 'app-about',
-  templateUrl: './about.component.html',
-  styleUrls: ['./about.component.css']
+  selector: 'app-privacy-policy',
+  templateUrl: './privacy-policy.component.html',
+  styleUrls: ['./privacy-policy.component.css']
 })
-export class AboutComponent {
+export class PrivacyPolicyComponent {
 
   newNetworkLogo = './assets/params/images/logo/click-times-logo.jpg';
   articles: any;
@@ -18,7 +18,7 @@ export class AboutComponent {
   searched = false;
   searchedData: any;
   newsCategory = 'general';
-  title = 'About Us';
+  title = 'Privacy Policy';
   searchBusy = false;
   hostName = environment.application.url;
   currentDate = new Date();
