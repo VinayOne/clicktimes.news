@@ -39,7 +39,8 @@ export class HomeService {
   }
 
   serachNewsArticles(queryText: string) {
-    return this.http.get(`https://bing-news-search1.p.rapidapi.com/news/search?q=${queryText}&freshness=DAY&textFormat=RAW&safeSearch=Off&offset=0&count=30`, headerOptions);
+    //return this.http.get(`https://bing-news-search1.p.rapidapi.com/news/search?q=${queryText}&freshness=DAY&textFormat=RAW&safeSearch=Off&offset=0&count=30`, headerOptions);
+    return this.http.get(`https://gnews.io/api/v4/search?q=${queryText}&lang=en&country=us&max=10&apikey=7cceea9c477cb518ae671dc4c9869db7`);
   }
 
   sendMail(data: any) {

@@ -29,7 +29,7 @@
                 </span>
             </p>
             <mat-progress-bar mode="indeterminate" *ngIf="searchBusy"></mat-progress-bar>
-            <app-search-result *ngIf="searched" [searchResult]="searchedData?.value"></app-search-result>
+            <app-search-result *ngIf="searched" [searchResult]="searchedData?.articles"></app-search-result>
             <div class="row" *ngIf="!searched">
                 <div class="col-12">
                     <mat-card class="searchBox">

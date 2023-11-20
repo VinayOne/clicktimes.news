@@ -94,7 +94,6 @@ export class HomeComponent implements OnInit {
     const querytxt = queryTxt.split(' ').join('+');
     this.homeService.serachNewsArticles(querytxt).subscribe({
       next: response => {
-        console.log('respnse: ', response);
         if (response) {
           this.searchedData = response;
           this.searchBusy = false;
